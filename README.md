@@ -1,6 +1,6 @@
-# README.md for Vue Portfolio
+# README.md for Portfolio
 
-# Vue Portfolio Website
+# Portfolio Website
 
 This is a portfolio website built with Vue.js, designed to showcase projects, skills, and provide information about the portfolio owner. The website features an interactive and engaging user interface.
 
@@ -48,7 +48,7 @@ vue-portfolio
    ```
 2. Navigate to the project directory:
    ```bash
-   cd vue-portfolio
+   cd Aditya-Tatipaka-Portfolio
    ```
 3. Install dependencies:
    ```bash
