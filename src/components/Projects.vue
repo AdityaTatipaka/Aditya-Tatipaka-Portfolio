@@ -42,7 +42,7 @@ export default defineComponent({
         id: 1,
         title: 'Healthcare Platform Transformation',
         description: 'Led the transformation from monolithic to microservices architecture, reducing data processing time by 95% and increasing system scalability by 50%. Implemented features for automated test orders and sample processing.',
-        image: '/projects/healthcare-platform.webp',
+        image: `${import.meta.env.BASE_URL}projects/healthcare-platform.webp`,
         demo: '#',
         github: '#',
         technologies: ['Node.js', 'Angular', 'MySQL', 'AWS', 'Azure']
@@ -51,7 +51,7 @@ export default defineComponent({
         id: 2,
         title: 'COVID-19 Detection System',
         description: 'Led development of an AI-powered web application for analyzing chest X-rays, achieving 95% COVID-19 detection accuracy. Built with Node.js, Express.js, MongoDB, and Python.',
-        image: '/projects/covid-detection.webp',
+        image: `${import.meta.env.BASE_URL}projects/covid-detection.webp`,
         demo: '#',
         github: '#',
         technologies: ['Node.js', 'Python', 'MongoDB', 'Machine Learning']
@@ -60,7 +60,7 @@ export default defineComponent({
         id: 3,
         title: 'Insurance Data Processing Suite',
         description: 'Architected core components of healthcare insurance suite using Node.js and Express.js. Implemented NoSQL database solution with ArangoDB for complex insurance data structures.',
-        image: '/projects/insurance-suite.webp',
+        image: `${import.meta.env.BASE_URL}projects/insurance-suite.webp`,
         demo: '#',
         github: '#',
         technologies: ['Node.js', 'Express.js', 'ArangoDB', 'D3.js']

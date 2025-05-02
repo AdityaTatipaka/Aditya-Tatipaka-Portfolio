@@ -5,7 +5,7 @@
       <div class="about-content">
         <div class="about-image-container" ref="imageContainer">
           <div class="image-frame">
-            <img src="@/assets/images/Profile pic.jpeg" alt="Profile Picture" class="profile-image" />
+            <img :src="profileImageUrl" alt="Profile Picture" class="profile-image" />
             <div class="frame-border"></div>
           </div>
           <div class="floating-shapes">
@@ -36,7 +36,7 @@
             </div>
 
             <div class="cta-container">
-              <a href="/Aditya_Tatipaka_Full_Stack.pdf" class="download-btn" download>
+              <a :href="resumeUrl" class="download-btn" download>
                 <i class="fas fa-download"></i>
                 Download Resume
               </a>
@@ -62,6 +62,9 @@ export default defineComponent({
     const imageContainer = ref(null);
     const textContent = ref(null);
     const expCards = ref<HTMLElement[]>([]);
+    const baseUrl = import.meta.env.BASE_URL;
+    const profileImageUrl = `${baseUrl}images/profile-pic.jpeg`;
+    const resumeUrl = `${baseUrl}Aditya_Tatipaka_Full_Stack.pdf`;
 
     const experience = [
       {
@@ -190,7 +193,9 @@ export default defineComponent({
       expCards,
       experience,
       handleMouseMove,
-      handleMouseLeave
+      handleMouseLeave,
+      profileImageUrl,
+      resumeUrl
     };
   }
 });

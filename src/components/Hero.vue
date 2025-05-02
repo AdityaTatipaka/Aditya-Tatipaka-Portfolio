@@ -9,7 +9,7 @@
           View My Work
           <span class="arrow">→</span>
         </router-link>
-        <a href="/Aditya_Tatipaka_Full_Stack.pdf" download class="cta-button download-button">
+        <a :href="resumeUrl" download class="cta-button download-button">
           Download Resume
           <span class="arrow">↓</span>
         </a>
@@ -39,6 +39,8 @@ export default defineComponent({
     const subtitle = ref(null);
     const title = "Hello, I'm Aditya Tatipaka";
     const subtitleText = "Full Stack Software Engineer";
+    const baseUrl = import.meta.env.BASE_URL;
+    const resumeUrl = `${baseUrl}Aditya_Tatipaka_Full_Stack.pdf`;
 
     onMounted(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -59,7 +61,8 @@ export default defineComponent({
       content,
       subtitle,
       title,
-      subtitleText
+      subtitleText,
+      resumeUrl
     };
   }
 });
