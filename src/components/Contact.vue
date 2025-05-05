@@ -15,28 +15,38 @@
           </div>
         </div>
 
-        <form class="contact-form" @submit.prevent="submitForm" ref="form">
+        <form class="contact-form" action="https://formsubmit.co/adityatatipaka@gmail.com" method="POST"
+          @submit.prevent="submitForm" ref="form">
+          <!-- FormSubmit.co Configuration -->
+          <input type="hidden" name="_subject" value="New Contact Form Submission">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://adityatatipaka.github.io/Aditya-Tatipaka-Portfolio/">
+
+          <!-- Honeypot field to prevent spam -->
+          <input type="text" name="_honey" style="display: none;">
+
           <div class="form-group">
             <div class="input-container" :class="{ 'focused': focused === 'name' }">
               <label for="name">Name</label>
-              <input type="text" id="name" v-model="formData.name" @focus="focused = 'name'" @blur="focused = null"
-                required />
+              <input type="text" id="name" name="name" v-model="formData.name" @focus="focused = 'name'"
+                @blur="focused = null" required />
             </div>
           </div>
 
           <div class="form-group">
             <div class="input-container" :class="{ 'focused': focused === 'email' }">
               <label for="email">Email</label>
-              <input type="email" id="email" v-model="formData.email" @focus="focused = 'email'" @blur="focused = null"
-                required />
+              <input type="email" id="email" name="email" v-model="formData.email" @focus="focused = 'email'"
+                @blur="focused = null" required />
             </div>
           </div>
 
           <div class="form-group">
             <div class="input-container" :class="{ 'focused': focused === 'message' }">
               <label for="message">Message</label>
-              <textarea id="message" v-model="formData.message" @focus="focused = 'message'" @blur="focused = null"
-                required></textarea>
+              <textarea id="message" name="message" v-model="formData.message" @focus="focused = 'message'"
+                @blur="focused = null" required></textarea>
             </div>
           </div>
 
@@ -58,7 +68,7 @@ export default defineComponent({
   name: 'Contact',
   setup() {
     const contactSection = ref(null);
-    const form = ref(null);
+    const form = ref<HTMLFormElement | null>(null);
     const infoCards = ref<HTMLElement[]>([]);
     const focused = ref<string | null>(null);
     const isSubmitting = ref(false);
@@ -120,33 +130,49 @@ export default defineComponent({
       });
     };
 
-    const submitForm = async () => {
+    const submitForm = async (e: Event) => {
+      const form = e.target as HTMLFormElement;
       isSubmitting.value = true;
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      // Reset form
-      formData.name = '';
-      formData.email = '';
-      formData.message = '';
-      isSubmitting.value = false;
-
-      // Show success animation
-      const btn = form.value?.querySelector('.submit-btn');
-      if (btn) {
-        gsap.to(btn, {
-          backgroundColor: '#4CAF50',
-          duration: 0.3,
-          onComplete: () => {
-            setTimeout(() => {
-              gsap.to(btn, {
-                backgroundColor: 'var(--primary-color)',
-                duration: 0.3
-              });
-            }, 1000);
-          }
+      try {
+        const formPayload = new FormData(form);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formPayload,
         });
+
+        if (response.ok) {
+          // Reset form
+          form.reset();
+          // Reset reactive form data
+          Object.keys(formData).forEach(key => {
+            formData[key as keyof typeof formData] = '';
+          });
+
+          // Show success animation
+          const btn = form.querySelector('.submit-btn');
+          if (btn) {
+            gsap.to(btn, {
+              backgroundColor: '#4CAF50',
+              duration: 0.3,
+              onComplete: () => {
+                setTimeout(() => {
+                  gsap.to(btn, {
+                    backgroundColor: 'var(--primary-color)',
+                    duration: 0.3
+                  });
+                }, 1000);
+              }
+            });
+          }
+        } else {
+          throw new Error('Failed to submit form');
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('Failed to send message. Please try again.');
+      } finally {
+        isSubmitting.value = false;
       }
     };
 
